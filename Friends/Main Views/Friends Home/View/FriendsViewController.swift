@@ -7,7 +7,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class FriendsViewController: UIViewController {
+    private let viewModel: FriendsViewModel
+    
+    private var friendList = [FriendsInfo]()
+    
+    init(viewModel: FriendsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let sectionInsets = UIEdgeInsets(
         top: 20.0,
@@ -20,7 +32,7 @@ class ViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collection.register(FriendsViewCollectionViewCell.self, forCellWithReuseIdentifier: FriendsViewCollectionViewCell.identifier)
         collection.backgroundColor = .white
         
         return collection
@@ -32,6 +44,9 @@ class ViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        viewModel.delegate = self
+        viewModel.fetchData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -39,18 +54,41 @@ class ViewController: UIViewController {
         
         collectionView.frame = view.bounds
     }
-    
 }
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension FriendsViewController: FriendsViewModelProtocol {
+    func updateView(for data: [FriendsInfo]) {
+        print(data)
+        DispatchQueue.main.async { [weak self] in
+            self?.friendList = data
+            self?.collectionView.reloadData()
+        }
+    }
+    
+    func showError(for error: String) {
+        print(error)
+    }
+}
+
+extension FriendsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        friendList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendsViewCollectionViewCell.identifier, for: indexPath) as? FriendsViewCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        let friendInfo = friendList[indexPath.item]
         
-        cell.backgroundColor = .black
+        guard let imageUrl = URL(string: friendInfo.picture.medium) else {
+            return UICollectionViewCell()
+        }
+        
+        let viewModel = FriendsViewCollectionViewCellModel(imageUrl: imageUrl, name: friendInfo.name, country: friendInfo.location.country)
+        
+        cell.configure(with: viewModel)
+        cell.backgroundColor = .white
         
         return cell
     }
@@ -65,7 +103,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
         
-        return CGSize(width: widthPerItem, height: widthPerItem)
+        return CGSize(width: widthPerItem, height: 190)
     }
     
     // 3
