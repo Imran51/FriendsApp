@@ -60,4 +60,9 @@ public class ViewUtils {
 
         return view
     }
+    
+    public static func unSuccessfulAlert(_ message: String) -> UIAlertController {
+
+        return UIAlertController.alertDialog(message, title: nil)
+    }
 }

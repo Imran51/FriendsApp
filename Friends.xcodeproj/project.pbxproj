@@ -32,6 +32,7 @@
 		71EE531D26583C2A006A2F32 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE531C26583C2A006A2F32 /* UIColor.swift */; };
 		71EE531F26584322006A2F32 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE531E26584322006A2F32 /* PaddingLabel.swift */; };
 		71EE532126584C99006A2F32 /* CustomLoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE532026584C99006A2F32 /* CustomLoadingIndicatorView.swift */; };
+		71EE5323265851EA006A2F32 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE5322265851EA006A2F32 /* UIAlertController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		71EE531C26583C2A006A2F32 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		71EE531E26584322006A2F32 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		71EE532026584C99006A2F32 /* CustomLoadingIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLoadingIndicatorView.swift; sourceTree = "<group>"; };
+		71EE5322265851EA006A2F32 /* UIAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +214,7 @@
 		715B78E82657B5E800F33636 /* Extenstion */ = {
 			isa = PBXGroup;
 			children = (
+				71EE5322265851EA006A2F32 /* UIAlertController.swift */,
 				715B78E92657B5FC00F33636 /* UIImageView.swift */,
 				71EE531A26583074006A2F32 /* UIView.swift */,
 				71EE531C26583C2A006A2F32 /* UIColor.swift */,
@@ -341,6 +344,7 @@
 				71EE531D26583C2A006A2F32 /* UIColor.swift in Sources */,
 				713F00B1265766450000AE0D /* NetworkService.swift in Sources */,
 				715B78E52657AED200F33636 /* CustomImageView.swift in Sources */,
+				71EE5323265851EA006A2F32 /* UIAlertController.swift in Sources */,
 				715B78EA2657B5FC00F33636 /* UIImageView.swift in Sources */,
 				713F00B526576ADA0000AE0D /* FriendDetailViewModel.swift in Sources */,
 				713F00B926576B100000AE0D /* FriendsDetailModel.swift in Sources */,

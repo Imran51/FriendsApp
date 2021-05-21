@@ -17,6 +17,7 @@ class FriendsViewController: UIViewController {
     private let itemsPerRow: CGFloat = 3
     private let cellHeight: CGFloat = 190
     
+    private let refreshControl = UIRefreshControl()
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -34,8 +35,16 @@ class FriendsViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        collectionView.alwaysBounceVertical = true
+        collectionView.refreshControl = refreshControl
         viewModel?.fetchData()
+    }
+    
+    @objc
+    private func didPullToRefresh(_ sender: Any) {
+        viewModel?.fetchData()
+        refreshControl.endRefreshing()
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,7 +79,11 @@ extension FriendsViewController: FriendsViewModelToViewController {
     }
     
     func showError(for error: String) {
-        print(error)
+        DispatchQueue.main.async {[weak self] in
+            let alert = ViewUtils.unSuccessfulAlert(error)
+            self?.present(alert, animated: true)
+        }
+        
     }
 }
 

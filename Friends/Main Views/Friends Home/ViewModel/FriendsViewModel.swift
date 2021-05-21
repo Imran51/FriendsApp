@@ -21,7 +21,7 @@ class FriendsViewModel: FriendsViewControllerToViewModel {
     
     func fetchData() {
         view?.loadingIndicator(isLoading: true)
-        let numberOfRequiredData = 20
+        let numberOfRequiredData = 10
         let urlParameter = "?results=\(numberOfRequiredData)"
         guard let url = URL(string: URLPathConstant.friendsUrl+urlParameter) else {
             view?.showError(for: "URL can be not constructed properly.")
