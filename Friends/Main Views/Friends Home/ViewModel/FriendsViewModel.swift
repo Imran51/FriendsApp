@@ -8,6 +8,7 @@
 import UIKit
 
 class FriendsViewModel: FriendsViewControllerToViewModel {
+    
     var router: FriendsViewModelToRouter?
     
     var view: FriendsViewModelToViewController?
@@ -19,7 +20,8 @@ class FriendsViewModel: FriendsViewControllerToViewModel {
     private let service: NetworkService = NetworkService.shared
     
     func fetchData() {
-        let numberOfRequiredData = 10
+        view?.loadingIndicator(isLoading: true)
+        let numberOfRequiredData = 20
         let urlParameter = "?results=\(numberOfRequiredData)"
         guard let url = URL(string: URLPathConstant.friendsUrl+urlParameter) else {
             view?.showError(for: "URL can be not constructed properly.")
@@ -30,8 +32,10 @@ class FriendsViewModel: FriendsViewControllerToViewModel {
             switch result {
             case .success(let model):
                 self?.view?.updateView(for: model.results)
+                self?.view?.loadingIndicator(isLoading: false)
             case .failure(let error):
                 self?.view?.showError(for: error.localizedDescription)
+                self?.view?.loadingIndicator(isLoading: false)
             }
         })
     }

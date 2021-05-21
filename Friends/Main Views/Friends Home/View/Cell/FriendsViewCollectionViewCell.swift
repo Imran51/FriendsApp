@@ -14,7 +14,7 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     
     private let imageParentView: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
+        view.backgroundColor = UIColor(hexString: "#d8dbe2")
         view.clipsToBounds = true
         view.layer.cornerRadius = 10
         // Top right corner, Top left corner respectively
@@ -25,7 +25,6 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     
     private let imageView: CustomImageView = {
         let image = CustomImageView()
-        
         
         return image
     }()

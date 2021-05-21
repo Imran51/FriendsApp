@@ -13,6 +13,8 @@ protocol FriendsViewModelToViewController {
     func updateView(for data: [FriendsInfo])
     
     func showError(for error: String)
+    
+    func loadingIndicator(isLoading: Bool)
 }
 
 protocol FriendsViewModelToRouter {

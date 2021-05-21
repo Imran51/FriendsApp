@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-
 class FriendsViewController: UIViewController {
     
     var viewModel: FriendsViewControllerToViewModel?
@@ -45,9 +43,25 @@ class FriendsViewController: UIViewController {
         
         collectionView.frame = view.bounds
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionView.collectionViewLayout.invalidateLayout()
+        // Also try reloading your collection view to calculate the new constraints
+        DispatchQueue.main.async{[weak self] in
+            self?.collectionView.reloadData()
+        }
+    }
 }
 
+// MARK:- View Updating with data after getting data from viewModel
+
 extension FriendsViewController: FriendsViewModelToViewController {
+    func loadingIndicator(isLoading: Bool) {
+        DispatchQueue.main.async {
+            isLoading ? CustomLoadingIndicatorView.sharedInstance.showBlurView(withTitle: "Please Wait...") : CustomLoadingIndicatorView.sharedInstance.hide()
+        }
+    }
+    
     func updateView(for data: [FriendsInfo]) {
         DispatchQueue.main.async { [weak self] in
             self?.friendList = data
@@ -59,6 +73,8 @@ extension FriendsViewController: FriendsViewModelToViewController {
         print(error)
     }
 }
+
+// MARK:- Collection View Delegate, DataSource, FlowLayout Implementation
 
 extension FriendsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
