@@ -7,26 +7,18 @@
 
 import UIKit
 
+
+
 class FriendsViewController: UIViewController {
-    private let viewModel: FriendsViewModel
+    
+    var viewModel: FriendsViewControllerToViewModel?
     
     private var friendList = [FriendsInfo]()
     
-    init(viewModel: FriendsViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private let sectionInsets = UIEdgeInsets(
-        top: 20.0,
-        left: 10.0,
-        bottom: 20.0,
-        right: 10.0)
+    private let sectionInsets = UIEdgeInsets(top: 20.0, left: 10.0, bottom: 20.0, right: 10.0)
     private let itemsPerRow: CGFloat = 3
+    private let cellHeight: CGFloat = 190
+    
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -45,8 +37,7 @@ class FriendsViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        viewModel.delegate = self
-        viewModel.fetchData()
+        viewModel?.fetchData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -56,9 +47,8 @@ class FriendsViewController: UIViewController {
     }
 }
 
-extension FriendsViewController: FriendsViewModelProtocol {
+extension FriendsViewController: FriendsViewModelToViewController {
     func updateView(for data: [FriendsInfo]) {
-        print(data)
         DispatchQueue.main.async { [weak self] in
             self?.friendList = data
             self?.collectionView.reloadData()
@@ -93,6 +83,13 @@ extension FriendsViewController: UICollectionViewDelegate, UICollectionViewDataS
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let friendInfo = friendList[indexPath.item]
+        guard let nav = self.navigationController else { return }
+        viewModel?.showDetailView(from: nav, withData: friendInfo)
+    }
+    
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -103,7 +100,7 @@ extension FriendsViewController: UICollectionViewDelegate, UICollectionViewDataS
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
         
-        return CGSize(width: widthPerItem, height: 190)
+        return CGSize(width: widthPerItem, height: cellHeight)
     }
     
     // 3

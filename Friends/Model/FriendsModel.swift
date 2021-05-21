@@ -16,6 +16,8 @@ struct FriendsInfo: Codable {
     let name: NameInfo
     let location: Address
     let picture: PictureInfo
+    let email: String
+    let cell: String
 }
 
 struct PictureInfo: Codable {

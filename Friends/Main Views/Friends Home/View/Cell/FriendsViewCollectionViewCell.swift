@@ -7,14 +7,10 @@
 
 import UIKit
 
-struct FriendsViewCollectionViewCellModel {
-    let imageUrl: URL
-    let name: NameInfo
-    let country: String
-}
-
 class FriendsViewCollectionViewCell: UICollectionViewCell {
     static let identifier = "FriendsViewCollectionViewCell"
+    
+    private static let fontSize: CGFloat = 15
     
     private let imageParentView: UIView = {
         let view = UIView()
@@ -53,7 +49,7 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = .systemFont(ofSize: fontSize, weight: .bold)
         label.textColor = .label
         label.text = "Full Name:"
         label.numberOfLines = 1
@@ -64,7 +60,7 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     
     private let nameLabelText: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15, weight: .regular)
+        label.font = .systemFont(ofSize: fontSize, weight: .regular)
         label.textColor = .label
         label.numberOfLines = 2
         label.textAlignment = .left
@@ -84,7 +80,7 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     
     private let countryLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = .systemFont(ofSize: fontSize, weight: .bold)
         label.textColor = .label
         label.text = "Country:"
         label.numberOfLines = 1
@@ -95,7 +91,7 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     
     private let countryLabelText: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15, weight: .regular)
+        label.font = .systemFont(ofSize: fontSize, weight: .regular)
         label.textColor = .label
         label.numberOfLines = 1
         label.textAlignment = .left
@@ -126,12 +122,37 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         parentView.frame = contentView.bounds
-        imageParentView.frame = CGRect(x: 0, y: 0, width: parentView.frame.width, height: 95)
-        imageView.frame = CGRect(x: imageParentView.frame.width/2-40, y: 5, width: 80, height: 80)
-        imageView.round(cornerRadius: 40, borderColor: .white)
         
-        nameContainerStackView.frame = CGRect(x: 10, y: 105, width: parentView.frame.width-20, height: 40)
-        countryContainerStackView.frame = CGRect(x: 10, y: 145, width: parentView.frame.width-10, height: 40)
+        imageParentView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: parentView.frame.width,
+            height: 95
+        )
+        imageView.frame = CGRect(
+            x: imageParentView.frame.width/2-40,
+            y: 5,
+            width: 80,
+            height: 80
+        )
+        imageView.round(
+            cornerRadius: 40,
+            borderColor: .white
+        )
+        
+        nameContainerStackView.frame = CGRect(
+            x: 10,
+            y: 105,
+            width: parentView.frame.width-20,
+            height: 40
+        )
+        
+        countryContainerStackView.frame = CGRect(
+            x: 10,
+            y: 145,
+            width: parentView.frame.width-10,
+            height: 40
+        )
         
     }
     
@@ -149,44 +170,3 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
         countryLabelText.text = viewModel.country
     }
 }
-
-
-extension NSMutableAttributedString {
-    
-    func formatFontWeight(_ value: String, isStringBold stringBold: Bool, _ fontSize: CGFloat = 18, _ fontColor: UIColor = UIColor.black, isItalicStyleEnabled italicStyleEnabled:Bool = false) -> NSMutableAttributedString {
-        var attributes: [NSAttributedString.Key: Any] = [:]
-        let font = stringBold ? UIFont.boldSystemFont(ofSize: fontSize) : UIFont.systemFont(ofSize: fontSize)
-        attributes = [.font: (italicStyleEnabled ? font.italics() : font), .foregroundColor: fontColor]
-        
-        self.append(NSAttributedString(string: value, attributes: attributes))
-        
-        return self
-    }
-}
-
-extension UIFont{
-    fileprivate func withTraits(_ traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
-        
-        // create a new font descriptor with the given traits
-        guard let fd = fontDescriptor.withSymbolicTraits(traits) else {
-            // the given traits couldn't be applied, return self
-            return self
-        }
-        
-        // return a new font with the created font descriptor
-        return UIFont(descriptor: fd, size: pointSize)
-    }
-    
-    func italics() -> UIFont {
-        return withTraits(.traitItalic)
-    }
-    
-    func bold() -> UIFont {
-        return withTraits(.traitBold)
-    }
-    
-    func boldItalics() -> UIFont {
-        return withTraits([ .traitBold, .traitItalic ])
-    }
-}
-

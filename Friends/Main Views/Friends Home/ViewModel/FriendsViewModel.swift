@@ -5,26 +5,33 @@
 //  Created by Imran Sayeed on 21/5/21.
 //
 
-import Foundation
+import UIKit
 
-class FriendsViewModel {
+class FriendsViewModel: FriendsViewControllerToViewModel {
+    var router: FriendsViewModelToRouter?
+    
+    var view: FriendsViewModelToViewController?
+    
+    func showDetailView(from nav: UINavigationController, withData data: FriendsInfo) {
+        router?.showDetailViewController(from: nav, withData: data)
+    }
+    
     private let service: NetworkService = NetworkService.shared
-    weak var delegate: FriendsViewModelProtocol?
     
     func fetchData() {
         let numberOfRequiredData = 10
         let urlParameter = "?results=\(numberOfRequiredData)"
         guard let url = URL(string: URLPathConstant.friendsUrl+urlParameter) else {
-            delegate?.showError(for: "URL can be not constructed properly.")
+            view?.showError(for: "URL can be not constructed properly.")
             return
         }
         
         service.fetchData(for: url, completion: {[weak self] (result: Result<FriendsModel,Error>) in
             switch result {
             case .success(let model):
-                self?.delegate?.updateView(for: model.results)
+                self?.view?.updateView(for: model.results)
             case .failure(let error):
-                self?.delegate?.showError(for: error.localizedDescription)
+                self?.view?.showError(for: error.localizedDescription)
             }
         })
     }
