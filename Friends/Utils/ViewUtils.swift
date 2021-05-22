@@ -23,10 +23,7 @@ public class ViewUtils {
 
     public static func verticalSpacerView() -> UIView {
         let spacer = UIView()
-        let constraint = spacer.heightAnchor.constraint(greaterThanOrEqualToConstant: CGFloat.greatestFiniteMagnitude)
-        constraint.isActive = true
-        constraint.priority = .defaultLow
-
+        
         return spacer
     }
 
@@ -49,6 +46,7 @@ public class ViewUtils {
         label.layer.cornerRadius = 5
         label.layer.masksToBounds = true
         label.textColor = .label
+        
 
         return label
     }

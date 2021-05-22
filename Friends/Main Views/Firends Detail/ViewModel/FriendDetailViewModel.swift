@@ -8,12 +8,12 @@
 import Foundation
 
 class FriendsDetailViewModel: FriendsDetailViewControllerToViewModel {
-    func getData() {
-        //
-    }
-    
     var router: FriendsDetailViewModelToRouter?
     
     var view: FriendsDetailViewModelToViewController?
+    
+    func getData() {
+        //
+    }
 }
 

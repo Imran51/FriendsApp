@@ -12,7 +12,7 @@ class FriendsDetailViewControllerRouter: FriendsDetailViewModelToRouter {
         let detailsView = FriendsDetailViewControllerRouter.start()
         detailsView.updateView(for: data)
         nav.pushViewController(detailsView, animated: true)
-        nav.navigationBar.prefersLargeTitles = true
+        //nav.navigationBar.prefersLargeTitles = true
     }
     
     static func start() -> FriendsDetailViewController {

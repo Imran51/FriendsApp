@@ -8,40 +8,48 @@
 import UIKit
 
 class FriendsDetailViewController: UIViewController {
-    var viewModel: FriendsDetailViewControllerToViewModel?
     
-    private let imageView: CustomImageView = {
-        let image = CustomImageView()
-        
-        return image
-    }()
+    struct LabelConstant {
+        static let fullName = "Full Name: "
+        static let email = "Email: "
+        static let city = "City: "
+        static let state = "State: "
+        static let country = "Country: "
+        static let cellPhone = "Cell Phone: "
+    }
+    
+    var viewModel: FriendsDetailViewControllerToViewModel?
     
     private var detailInfo: FriendsInfo?
     
+    private let imageView = CustomImageView()
+
     private let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.backgroundColor = .white
         scroll.isScrollEnabled = true
         scroll.alwaysBounceHorizontal = false
         scroll.alwaysBounceVertical = true
-        
+        scroll.backgroundColor = UIColor(hexString: "#d8dbe2")
+
         return scroll
     }()
     
     private let verticalContainerStackView: UIStackView = {
         let stack = ViewUtils.customStackview(withSpacing: 5, withAxis: .vertical)
-        stack.backgroundColor = UIColor(hexString: "#d8dbe2")
         
+
         return stack
     }()
-    
+
     private let containerView: UIView = {
         let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
         container.heightAnchor.constraint(equalToConstant: 210).isActive = true
-        
+
         return container
     }()
-    
+
     private let fullNameLabel = ViewUtils.customLabel(background: .clear, alignment: .center, height: 60)
     private let cityLabel = ViewUtils.customLabel()
     private let stateLabel = ViewUtils.customLabel()
@@ -50,13 +58,38 @@ class FriendsDetailViewController: UIViewController {
     private let cellPhoneLabel = ViewUtils.customLabel()
     private let verticalSpacerView = ViewUtils.verticalSpacerView()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        addUIElementToMainView()
+        setupViewElementsContaints()
+        initializeViewData()
+        configureViewData()
+        addActionToEmailClick()
+    }
+    
+    private func addActionToEmailClick() {
+        verticalContainerStackView.isUserInteractionEnabled = true
+        emailLabel.isUserInteractionEnabled = true
+        emailLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openEmail(_:))))
+    }
+    
+    @objc private func openEmail(_ sender: UITapGestureRecognizer) {
+        if let email = detailInfo?.email ,let url = URL(string: "mailto:\(email)") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    private func initializeViewData() {
+        guard let picture = detailInfo?.picture, let imageUrl = URL(string: picture.large) else {
+            return
+        }
+        imageView.loadImageWithUrl(imageUrl)
+    }
+    
+    private func addUIElementToMainView() {
         view.addSubview(scrollView)
-        
         scrollView.addSubview(verticalContainerStackView)
         verticalContainerStackView
             .addArrangedSubViews(
@@ -69,35 +102,39 @@ class FriendsDetailViewController: UIViewController {
                 cellPhoneLabel,
                 verticalSpacerView
             )
-        
         containerView.addSubview(imageView)
-        guard let picture = detailInfo?.picture, let imageUrl = URL(string: picture.large) else {
-            return
-        }
+    }
+    
+    private func setupViewElementsContaints() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        verticalContainerStackView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        imageView.loadImageWithUrl(imageUrl)
-        configureViewData()
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            verticalContainerStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            verticalContainerStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            verticalContainerStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            verticalContainerStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            verticalContainerStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            imageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: 200),
+            imageView.widthAnchor.constraint(equalToConstant: 200)
+        ])
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        scrollView.frame = view.bounds
-        verticalContainerStackView.frame = scrollView.frame
+        
         verticalContainerStackView.isLayoutMarginsRelativeArrangement = true
-        verticalContainerStackView.layoutMargins = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 10)
-        imageView.frame = CGRect(x: verticalContainerStackView.frame.width/2-100, y: 0, width: 200, height: 200)
+        verticalContainerStackView.layoutMargins = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
         
         imageView.round(cornerRadius: 100, borderColor: .white)
         fullNameLabel.font = .systemFont(ofSize: 24, weight: .bold)
-    }
-    
-    struct LabelConstant {
-        static let fullName = "Full Name: "
-        static let email = "Email: "
-        static let city = "City: "
-        static let state = "State: "
-        static let country = "Country: "
-        static let cellPhone = "Cell Phone: "
     }
     
     private func configureViewData() {
@@ -108,7 +145,7 @@ class FriendsDetailViewController: UIViewController {
         let fullName = info.name.title + " " + info.name.first + " " + info.name.last
         fullNameLabel.text = fullName
         
-        emailLabel.attributedText = getAttributedString(title: LabelConstant.email, text: info.email)
+        emailLabel.attributedText = getAttributedString(title: LabelConstant.email, text: info.email, textFontColor: .link)
         
         cityLabel.attributedText = getAttributedString(title: LabelConstant.city, text: info.location.city)
         stateLabel.attributedText = getAttributedString(title: LabelConstant.state, text: info.location.state)
@@ -117,57 +154,14 @@ class FriendsDetailViewController: UIViewController {
         
     }
     
-    private func getAttributedString(title: String, text: String) -> NSMutableAttributedString {
-        return NSMutableAttributedString().formatFontWeight(title, isStringBold: true, 18).formatFontWeight(text)
-    }
-    
-    private func getSeparator() -> UIView {
-        return ViewUtils.verticalSeparatorView()
+    private func getAttributedString(title: String, text: String, textFontColor: UIColor = .label) -> NSMutableAttributedString {
+        let fontSize: CGFloat = 20
+        return NSMutableAttributedString().formatFontWeight(title, isStringBold: true, withFonSize: fontSize).formatFontWeight(text,withFonSize: fontSize, withFontColor: textFontColor)
     }
 }
 
 extension FriendsDetailViewController: FriendsDetailViewModelToViewController {
     func updateView(for data: FriendsInfo) {
         detailInfo = data
-    }
-}
-
-extension NSMutableAttributedString {
-
-    func formatFontWeight(_ value: String, isStringBold stringBold: Bool = false, _ fontSize: CGFloat = 17, _ fontColor: UIColor = .label, isItalicStyleEnabled italicStyleEnabled:Bool = false) -> NSMutableAttributedString {
-        var attributes: [NSAttributedString.Key: Any] = [:]
-        let font = stringBold ? UIFont.boldSystemFont(ofSize: fontSize) : UIFont.systemFont(ofSize: fontSize)
-        attributes = [.font: (italicStyleEnabled ? font.italics() : font), .foregroundColor: fontColor]
-
-        self.append(NSAttributedString(string: value, attributes: attributes))
-
-        return self
-    }
-}
-
-
-extension UIFont{
-    fileprivate func withTraits(_ traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
-
-        // create a new font descriptor with the given traits
-        guard let fd = fontDescriptor.withSymbolicTraits(traits) else {
-            // the given traits couldn't be applied, return self
-            return self
-        }
-
-        // return a new font with the created font descriptor
-        return UIFont(descriptor: fd, size: pointSize)
-    }
-
-    func italics() -> UIFont {
-        return withTraits(.traitItalic)
-    }
-
-    func bold() -> UIFont {
-        return withTraits(.traitBold)
-    }
-
-    func boldItalics() -> UIFont {
-        return withTraits([ .traitBold, .traitItalic ])
     }
 }

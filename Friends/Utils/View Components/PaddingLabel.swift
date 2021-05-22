@@ -8,7 +8,6 @@
 
 import UIKit
 
-// swiftlint:disable all
 class PaddingLabel: UILabel {
     var insets = UIEdgeInsets.zero
 
