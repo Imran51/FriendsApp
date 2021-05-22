@@ -24,7 +24,7 @@ class CardView: UIView {
     var shadowOfSetWidth: CGFloat = 1
     var shadowOfSetHeight: CGFloat = 2
 
-    var shadowColour: UIColor = .darkGray
+    var shadowColour: UIColor = ViewUtils.isDarkUserInterface() ? .lightGray : .darkGray
     var shadowOpacity: CGFloat = 0.4
 
     override func layoutSubviews() {

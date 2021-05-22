@@ -30,7 +30,7 @@ class FriendsDetailViewController: UIViewController {
         scroll.isScrollEnabled = true
         scroll.alwaysBounceHorizontal = false
         scroll.alwaysBounceVertical = true
-        scroll.backgroundColor = UIColor(hexString: "#d8dbe2")
+        scroll.backgroundColor = .clear
 
         return scroll
     }()
@@ -61,7 +61,7 @@ class FriendsDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(hexString: "#d8dbe2")
         addUIElementToMainView()
         setupViewElementsContaints()
         initializeViewData()

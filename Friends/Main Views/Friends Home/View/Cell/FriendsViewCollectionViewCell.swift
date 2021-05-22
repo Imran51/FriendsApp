@@ -31,7 +31,7 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     
     private let parentView: CardView = {
         let view = CardView()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         return view
     }()
@@ -49,7 +49,6 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: fontSize, weight: .bold)
-        label.textColor = .label
         label.text = "Full Name:"
         label.numberOfLines = 1
         label.widthAnchor.constraint(equalToConstant: 80).isActive = true
@@ -60,7 +59,6 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     private let nameLabelText: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: fontSize, weight: .regular)
-        label.textColor = .label
         label.numberOfLines = 2
         label.textAlignment = .left
         
@@ -80,7 +78,6 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     private let countryLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: fontSize, weight: .bold)
-        label.textColor = .label
         label.text = "Country:"
         label.numberOfLines = 1
         label.widthAnchor.constraint(equalToConstant: 70).isActive = true
@@ -91,7 +88,6 @@ class FriendsViewCollectionViewCell: UICollectionViewCell {
     private let countryLabelText: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: fontSize, weight: .regular)
-        label.textColor = .label
         label.numberOfLines = 1
         label.textAlignment = .left
         

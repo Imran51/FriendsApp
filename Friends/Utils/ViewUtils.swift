@@ -36,9 +36,12 @@ public class ViewUtils {
         return spacer
     }
 
-    public static func customLabel(background: UIColor = .white, alignment: NSTextAlignment = .left ,height: CGFloat = 50.0) -> UILabel {
+    public static func customLabel(isPaddingEnabled: Bool = true, background: UIColor = .systemBackground, alignment: NSTextAlignment = .left ,height: CGFloat = 50.0) -> UILabel {
         let label = PaddingLabel()
-        label.padding(0, 0, 15, 15)
+        if isPaddingEnabled {
+            label.padding(0, 0, 15, 15)
+        }
+         
         label.textAlignment = alignment
         label.translatesAutoresizingMaskIntoConstraints = false
         label.heightAnchor.constraint(equalToConstant: height).isActive = true
@@ -62,5 +65,17 @@ public class ViewUtils {
     public static func unSuccessfulAlert(_ message: String) -> UIAlertController {
 
         return UIAlertController.alertDialog(message, title: nil)
+    }
+    
+    public static func isDarkUserInterface() -> Bool {
+        return UITraitCollection.current.userInterfaceStyle == .dark
+    }
+    
+    public static func isCurrentDeviceIphone() -> Bool {
+        return UIDevice.current.userInterfaceIdiom == .phone
+    }
+    
+    public static func isDevicePortrait() -> Bool {
+        return UIDevice.current.orientation == .portrait
     }
 }

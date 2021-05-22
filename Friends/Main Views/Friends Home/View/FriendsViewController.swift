@@ -14,7 +14,7 @@ class FriendsViewController: UIViewController {
     private var friendList = [FriendsInfo]()
     
     private let sectionInsets = UIEdgeInsets(top: 20.0, left: 10.0, bottom: 20.0, right: 10.0)
-    private let itemsPerRow: CGFloat = 3
+    private var itemsPerRow: CGFloat = 3
     private let cellHeight: CGFloat = 190
     
     private let refreshControl = UIRefreshControl()
@@ -24,21 +24,28 @@ class FriendsViewController: UIViewController {
         layout.scrollDirection = .vertical
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.register(FriendsViewCollectionViewCell.self, forCellWithReuseIdentifier: FriendsViewCollectionViewCell.identifier)
-        collection.backgroundColor = .white
+        collection.backgroundColor = .systemBackground
         
         return collection
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(collectionView)
         
+        view.addSubview(collectionView)
+        checkFeasibleItemsPerRow()
         collectionView.delegate = self
         collectionView.dataSource = self
-        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
-        collectionView.alwaysBounceVertical = true
-        collectionView.refreshControl = refreshControl
+        setupCollectionViewConstraints()
         viewModel?.fetchData()
+    }
+    
+    private func checkFeasibleItemsPerRow() {
+        if ViewUtils.isCurrentDeviceIphone() && ViewUtils.isDevicePortrait() {
+            itemsPerRow = 2
+        } else {
+            itemsPerRow = 3
+        }
     }
     
     @objc
@@ -47,13 +54,22 @@ class FriendsViewController: UIViewController {
         refreshControl.endRefreshing()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        collectionView.frame = view.bounds
+    private func setupCollectionViewConstraints() {
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        collectionView.alwaysBounceVertical = true
+        collectionView.refreshControl = refreshControl
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            
+        ])
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        checkFeasibleItemsPerRow()
         collectionView.collectionViewLayout.invalidateLayout()
         // Also try reloading your collection view to calculate the new constraints
         DispatchQueue.main.async{[weak self] in
@@ -107,7 +123,7 @@ extension FriendsViewController: UICollectionViewDelegate, UICollectionViewDataS
         let viewModel = FriendsViewCollectionViewCellModel(imageUrl: imageUrl, name: friendInfo.name, country: friendInfo.location.country)
         
         cell.configure(with: viewModel)
-        cell.backgroundColor = .white
+        cell.backgroundColor = .systemBackground
         
         return cell
     }
