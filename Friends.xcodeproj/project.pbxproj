@@ -30,7 +30,7 @@
 		71EE53112658012D006A2F32 /* FriendsDetailViewControllerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE53102658012D006A2F32 /* FriendsDetailViewControllerRouter.swift */; };
 		71EE531326580154006A2F32 /* FriendsDetailViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE531226580154006A2F32 /* FriendsDetailViewProtocol.swift */; };
 		71EE531826582D3E006A2F32 /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE531726582D3E006A2F32 /* ViewUtils.swift */; };
-		71EE531B26583074006A2F32 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE531A26583074006A2F32 /* UIView.swift */; };
+		71EE531B26583074006A2F32 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE531A26583074006A2F32 /* UIStackView.swift */; };
 		71EE531D26583C2A006A2F32 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE531C26583C2A006A2F32 /* UIColor.swift */; };
 		71EE531F26584322006A2F32 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE531E26584322006A2F32 /* PaddingLabel.swift */; };
 		71EE532126584C99006A2F32 /* CustomLoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE532026584C99006A2F32 /* CustomLoadingIndicatorView.swift */; };
@@ -63,7 +63,7 @@
 		71EE53102658012D006A2F32 /* FriendsDetailViewControllerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsDetailViewControllerRouter.swift; sourceTree = "<group>"; };
 		71EE531226580154006A2F32 /* FriendsDetailViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsDetailViewProtocol.swift; sourceTree = "<group>"; };
 		71EE531726582D3E006A2F32 /* ViewUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUtils.swift; sourceTree = "<group>"; };
-		71EE531A26583074006A2F32 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		71EE531A26583074006A2F32 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		71EE531C26583C2A006A2F32 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		71EE531E26584322006A2F32 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		71EE532026584C99006A2F32 /* CustomLoadingIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLoadingIndicatorView.swift; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 			children = (
 				71EE5322265851EA006A2F32 /* UIAlertController.swift */,
 				715B78E92657B5FC00F33636 /* UIImageView.swift */,
-				71EE531A26583074006A2F32 /* UIView.swift */,
+				71EE531A26583074006A2F32 /* UIStackView.swift */,
 				71EE531C26583C2A006A2F32 /* UIColor.swift */,
 				71BE7D3A2658C7BA00633B12 /* NSMutableAttributedString.swift */,
 				71BE7D3C2658C7DA00633B12 /* UIFont.swift */,
@@ -346,7 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71EE531B26583074006A2F32 /* UIView.swift in Sources */,
+				71EE531B26583074006A2F32 /* UIStackView.swift in Sources */,
 				71EE531D26583C2A006A2F32 /* UIColor.swift in Sources */,
 				713F00B1265766450000AE0D /* NetworkService.swift in Sources */,
 				715B78E52657AED200F33636 /* CustomImageView.swift in Sources */,

@@ -13,7 +13,7 @@ class FriendsDetailViewModel: FriendsDetailViewControllerToViewModel {
     var view: FriendsDetailViewModelToViewController?
     
     func getData() {
-        //
+        // some api call or buisness related functionality will be here or in this class
     }
 }
 

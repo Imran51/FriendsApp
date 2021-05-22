@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// FriendsViewController is the home view for this app and all the UI component resides here , and if any business related or data process or any kind of computational works it calls the viewModel, only UI related componet goes here
 class FriendsViewController: UIViewController {
     
     var viewModel: FriendsViewControllerToViewModel?

@@ -7,15 +7,12 @@
 
 import UIKit
 
+/// This is the main and all business logic goes here , View controller knows only the ViewModel all api interaction and other stuff goes here.
 class FriendsViewModel: FriendsViewControllerToViewModel {
     
     var router: FriendsViewModelToRouter?
     
     var view: FriendsViewModelToViewController?
-    
-    func showDetailView(from nav: UINavigationController, withData data: FriendsInfo) {
-        router?.showDetailViewController(from: nav, withData: data)
-    }
     
     private let service: NetworkService = NetworkService.shared
     
@@ -38,6 +35,10 @@ class FriendsViewModel: FriendsViewControllerToViewModel {
                 self?.view?.loadingIndicator(isLoading: false)
             }
         })
+    }
+    
+    func showDetailView(from nav: UINavigationController, withData data: FriendsInfo) {
+        router?.showDetailViewController(from: nav, withData: data)
     }
 }
 

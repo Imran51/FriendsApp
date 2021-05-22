@@ -7,12 +7,8 @@
 
 import UIKit
 
+/// FriendsViewControllerRouter is an entry point for opening FriendsViewController to show its UI elements and respective functionality. This class is also used for navigating to other viewcontrollers
 class FriendsViewControllerRouter: FriendsViewModelToRouter {
-    func showDetailViewController(from nav: UINavigationController, withData data: FriendsInfo) {
-        let detailsViewRouter = FriendsDetailViewControllerRouter()
-        detailsViewRouter.showViewController(from: nav, withData: data)
-    }
-    
     static func start() -> UINavigationController {
         let router = FriendsViewControllerRouter()
         var viewModel: FriendsViewControllerToViewModel = FriendsViewModel()
@@ -29,5 +25,10 @@ class FriendsViewControllerRouter: FriendsViewModelToRouter {
         
         
         return nav
+    }
+    
+    func showDetailViewController(from nav: UINavigationController, withData data: FriendsInfo) {
+        let detailsViewRouter = FriendsDetailViewControllerRouter()
+        detailsViewRouter.showViewController(from: nav, withData: data)
     }
 }

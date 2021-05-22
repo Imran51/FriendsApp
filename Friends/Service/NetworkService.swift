@@ -13,7 +13,6 @@ public class NetworkService {
     private init() {}
     
     func fetchData<T: Codable>(for url: URL, completion: @escaping(Result<T, Error>) -> Void) {
-        print(url)
         let task = URLSession.shared.dataTask(with: url, completionHandler: { (data,_,error) in
             guard let data = data else {
                 return
